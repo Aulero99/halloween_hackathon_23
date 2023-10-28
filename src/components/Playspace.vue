@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import { logger } from '../utils/Logger'
   import vars from '../variables.json'
 //   import { Player } from '../models/Player'
+import { walls } from '../models/collisions'
   export default {
     setup() {
         const canvas = document.getElementById('main')
@@ -83,8 +84,14 @@ import { logger } from '../utils/Logger'
                 x: 0,
                 y: 0, 
             },
-            imgSrc:"src/assets/img/background.png",
+            imgSrc:"src/assets/img/map-1.png",
         })
+
+        const walls2d = []
+        const blocksX = background.img.width/32
+        for (let i = 0; i < walls.length; i += blocksX){
+            walls2d.push(walls.slice(i, i + blocksX))
+        }
 
         function animate(){
             if(!paused){  
@@ -132,6 +139,7 @@ import { logger } from '../utils/Logger'
 
         onMounted(()=>{
             animate()
+            console.log(walls2d)
         })
       return {
   

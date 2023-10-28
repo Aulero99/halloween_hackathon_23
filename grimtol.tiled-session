@@ -3,28 +3,38 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "background.tsx",
+    "activeFile": "",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
+        "assets/tilesets/tileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 2
+        },
         "background.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 3
         }
     },
-    "last.imagePath": "D:/source/halloween_hackathon_23/src/assets/img",
+    "frame.defaultDuration": 150,
+    "last.exportedFilePath": "D:/source/halloween_hackathon_23/assets/tilesets",
+    "last.imagePath": "D:/source/halloween_hackathon_23/assets/tilesets",
     "map.fixedSize": false,
+    "map.lastUsedExportFilter": "JavaScript map files (*.js)",
+    "map.lastUsedFormat": "tmx",
     "openFiles": [
-        "background.tsx"
     ],
     "project": "grimtol.tiled-project",
     "recentFiles": [
+        "assets/tilesets/tileset.tsx",
         "background.tsx"
     ],
+    "resizeMap.removeObjects": true,
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 1,
-        "width": 1
-    }
+        "height": 32,
+        "width": 32
+    },
+    "tileset.useTransparentColor": true
 }

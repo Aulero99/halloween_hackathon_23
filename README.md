@@ -19,7 +19,7 @@ Good Luck and remember to have fun!
 
 ### The Legend of Castle Grimtol
 
-In a distant realm a there was a kingdom. It contained a great city that thrived through advancements in science and magic for it's people. Its schools and colleges we know across the land. All this research and knowledge lead to bustling trade, full fields each harvest and of course happy people... But not everyone shared this vision of growth.
+In a distant realm a there was a kingdom. It contained a great city that thrived through advancements in science and magic for it's people. Its schools and colleges were know across the land. All this research and knowledge lead to bustling trade, full fields each harvest and of course happy people... But not everyone shared this vision of growth.
 
 One day a dark cloud fell upon the land. The beloved king, who had ruled with kindness for many years, fell ill. Confident in his peoples abilities, he offered a generous reward to anyone who could heal him, with the sole desire of continuing the growth of the kingdom. Many healers and sorcerers tried but non could aid him, the sickness was quite unnatural.
 
@@ -27,6 +27,6 @@ Until one morning, a mysterious stranger entered the royal court, claiming to no
 
 As years passed, the tower extended towards the clouds. As the tower grew so did the power of the strangers curse, transforming its inhabitants into grotesque and disfigured versions of their former selves.
 
-Stories of the curse's grip spread to neighboring kingdoms, sparking fear. In response, several great druids were summoned to contain this monstrous affliction. In a solemn ceremony, they sealed city, it's inhabitants and the monolithic tower beneath the ground. With the once-thriving kingdom buried beneath the earth, Grimtol's grandeur and tragedy faded into forgotten history...
+Stories of the curse's grip spread to neighboring kingdoms, sparking fear. In response, several great druids were summoned to contain this monstrous affliction. In a solemn ceremony, they sealed the city, it's inhabitants and the monolithic tower beneath the ground. With the once-thriving kingdom buried beneath the earth, Grimtol's grandeur and tragedy faded into forgotten history...
 
 How will you proceed?

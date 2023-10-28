@@ -1,0 +1,30 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "background.tsx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "background.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 3
+        }
+    },
+    "last.imagePath": "D:/source/halloween_hackathon_23/src/assets/img",
+    "map.fixedSize": false,
+    "openFiles": [
+        "background.tsx"
+    ],
+    "project": "grimtol.tiled-project",
+    "recentFiles": [
+        "background.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 1,
+        "width": 1
+    }
+}

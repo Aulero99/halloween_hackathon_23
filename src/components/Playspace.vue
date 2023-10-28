@@ -12,6 +12,11 @@ import { logger } from '../utils/Logger'
         canvas.width = 1024
         canvas.height = 576
 
+        const scaledCanvas = {
+            width: canvas.width / 4,
+            height: canvas.height / 4
+        }
+
         function fill(){
             c.fillStyle = 'white'
             c.fillRect(0, 0, canvas.width, canvas.height)
@@ -84,7 +89,13 @@ import { logger } from '../utils/Logger'
         function animate(){
             if(!paused){  
                 fill()
+
+                c.save()
+                c.scale(4, 4)
+                c.translate(0, -background.img.height + scaledCanvas.height)
                 background.update()
+                c.restore()
+
                 player.update()
                 player.velocity.x = 0
                 if(keys.d.pressed){player.velocity.x = 5}

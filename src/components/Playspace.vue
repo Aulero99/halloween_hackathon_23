@@ -1,145 +1,146 @@
   <script>
 import { onMounted } from 'vue'
-import { logger } from '../utils/Logger'
-  import vars from '../variables.json'
-//   import { Player } from '../models/Player'
-import { walls } from '../models/collisions'
+import { Player } from '../models/Player'
+import { walls, platforms } from '../models/collisions'
+import { Sprite } from '../models/Sprite'
+import { AppState } from '../AppState'
+import { controls } from '../utils/Controls'
+import { CollisionBlock } from '../models/CollisionBlock'
+import { PlatformBlock } from '../models/PlatformBlock'
   export default {
+
+
     setup() {
         const canvas = document.getElementById('main')
         const c = canvas.getContext('2d')
-        let paused = false
-
-        canvas.width = 1024
-        canvas.height = 576
-
+        let player = null
+        
+        let scaler = AppState.canvasScale
+        const blockSize = AppState.blockSize
         const scaledCanvas = {
-            width: canvas.width / 4,
-            height: canvas.height / 4
+            width: AppState.canvasSize.x / scaler,
+            height: AppState.canvasSize.y / scaler
         }
-
+        
+        const keys = AppState.keys
+        let paused = AppState.paused
+        
+        const collisionBlocks = []
+        const platformBlocks = []
+    
         function fill(){
             c.fillStyle = 'white'
             c.fillRect(0, 0, canvas.width, canvas.height)
         }
-
-
-        class Sprite {
-            constructor(data){
-                this.position = data.position || {x:0,y:0}
-                this.img = new Image()
-                this.img.src = data.imgSrc
+        
+        function collisionSetup(){
+            const walls2d = []
+            const blocksX = background.img.width/blockSize
+            for (let i = 0; i < walls.length; i += blocksX){
+                walls2d.push(walls.slice(i, i + blocksX))
             }
-
-            draw(){
-                if (!this.img){return}
-                c.drawImage(this.img, this.position.x, this.position.y)
-            }
-
-            update(){
-                this.draw()
-            }
+            walls2d.forEach((row, y)=>{
+                row.forEach((sym, x)=>{
+                    if (sym != 0 ){
+                        collisionBlocks.push(new CollisionBlock({position:{
+                            x: x * blockSize,
+                            y: y * blockSize,
+                        }}))
+                    }
+                })
+            })
         }
 
-        class Player {
-            constructor(data){
-                this.position = data.position || {x:0, y:0,}
-                this.color = data.color || "red"
-                this.velocity = {x:0, y:1}
-                this.gravity = data.gravity || 0.5
-                this.height = data.height || 100
+        function platformSetup(){
+            const platforms2d = []
+            const blocksX = background.img.width/blockSize
+            for (let i = 0; i < walls.length; i += blocksX){
+                platforms2d.push(platforms.slice(i, i + blocksX))
             }
+            platforms2d.forEach((row, y)=>{
+                row.forEach((sym, x)=>{
+                    if (sym != 0 ){
+                        platformBlocks.push(new PlatformBlock({position:{
+                            x: x * blockSize,
+                            y: y * blockSize,
+                        }}))
+                    }
+                })
+            })
+        }
 
-            draw(){
-                c.fillStyle = this.color
-                c.fillRect(this.position.x, this.position.y, 100, this.height)
-            }
+        function canvasSetup(){
+            canvas.width = AppState.canvasSize.x
+            canvas.height = AppState.canvasSize.y
+        }
 
-            update(){
-                this.draw()
-                this.position.y += this.velocity.y
-                this.position.x += this.velocity.x
-                if(this.position.y + this.height + this.velocity.y < canvas.height){
-                    this.velocity.y += this.gravity
-                }else{
-                    this.velocity.y = 0
+        function playerSetup(){
+            player = new Player({
+            position:{x:5*blockSize, y:24*blockSize,},
+            collisionBlocks: collisionBlocks,
+            imgSrc: 'src/assets/img/warrior/Idle.png',
+            framerate: 8,
+            scale:0.65,
+            animations:{
+                Idle:{
+                    imgSrc: 'src/assets/img/warrior/Idle.png',
+                    framerate: 8,
+                },
+                Run:{
+                    imgSrc: 'src/assets/img/warrior/Run.png',
+                    framerate: 8,
                 }
             }
+        })
         }
         
-        const player = new Player({position:{x:20, y:0,}})
-
-
-        const keys = {
-            d:{
-                pressed: false,
-            },
-            a:{
-                pressed: false,
-            }
-        }
-
         const background = new Sprite({
             position:{
                 x: 0,
                 y: 0, 
             },
-            imgSrc:"src/assets/img/map-1.png",
+            imgSrc:"src/assets/img/map-1.png"
         })
-
-        const walls2d = []
-        const blocksX = background.img.width/32
-        for (let i = 0; i < walls.length; i += blocksX){
-            walls2d.push(walls.slice(i, i + blocksX))
-        }
 
         function animate(){
             if(!paused){  
                 fill()
 
                 c.save()
-                c.scale(4, 4)
-                c.translate(0, -background.img.height + scaledCanvas.height)
-                background.update()
-                c.restore()
-
-                player.update()
+                c.scale(scaler, scaler)
+                c.translate(-3*blockSize, -background.img.height + scaledCanvas.height + 4*blockSize)
+                background.update(c, canvas)
+                collisionBlocks.forEach((collisionBlock) => {
+                    collisionBlock.update(c, canvas)
+                })
+                platformBlocks.forEach((platformBlock) => {
+                    platformBlock.update(c, canvas)
+                })
+                player.update(c, canvas)
                 player.velocity.x = 0
+                if (keys.w.pressed && AppState.jump != true){
+                    player.velocity.y = -7
+                    // AppState.jump = true
+                }
                 if(keys.d.pressed){player.velocity.x = 5}
                 else if(keys.a.pressed){player.velocity.x = -5}
+                c.restore()
+                
+                
+
+
             }
             window.requestAnimationFrame(animate)
         }
 
-        window.addEventListener('keydown', (e) => {
-            switch (e.key){
-                case 'd':
-                    keys.d.pressed = true
-                    break
-                case 'a':
-                    keys.a.pressed = true
-                    break
-                case 'w':
-                    player.velocity.y = -18
-                    break
-            }
-        })
-
-        window.addEventListener('keyup', (e) => {
-            switch (e.key){
-                case 'd':
-                    keys.d.pressed = false
-                    break
-                case 'a':
-                    keys.a.pressed = false
-                    break
-            }
-        })
-    
-
         onMounted(()=>{
+            controls.setup()
+            canvasSetup()
+            collisionSetup()
+            platformSetup()
+            playerSetup()
+            console.log(player)
             animate()
-            console.log(walls2d)
         })
       return {
   
